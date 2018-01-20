@@ -29,24 +29,20 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <libxml2/libxml/xmlreader.h>
-#import <libxml2/libxml/xmlmemory.h>
-#import <libxml2/libxml/HTMLparser.h>
-#import <libxml/xpath.h>
-#import <libxml/xpathInternals.h>
+
+struct xmlDoc;
+struct xmlNode;
 
 @interface RXMLDocHolder : NSObject {
-    xmlDocPtr doc_;
+    struct xmlDoc *doc_;
 }
 
-- (id)initWithDocPtr:(xmlDocPtr)doc;
-- (xmlDocPtr)doc;
+- (id)initWithDocPtr:(struct xmlDoc *)doc;
+- (struct xmlDoc *)doc;
 
 @end
 
-@interface RXMLElement : NSObject<NSCopying> {
-    xmlNodePtr node_;
-}
+@interface RXMLElement : NSObject<NSCopying>
 
 - (id)initFromXMLString:(NSString *)xmlString encoding:(NSStringEncoding)encoding;
 - (id)initFromXMLFile:(NSString *)filename;
@@ -54,7 +50,7 @@
 - (id)initFromXMLFilePath:(NSString *)fullPath;
 - (id)initFromURL:(NSURL *)url __attribute__((deprecated));
 - (id)initFromXMLData:(NSData *)data;
-- (id)initFromXMLDoc:(RXMLDocHolder *)doc node:(xmlNodePtr)node;
+- (id)initFromXMLDoc:(RXMLDocHolder *)doc node:(struct xmlNode *)node;
 
 - (id)initFromHTMLString:(NSString *)xmlString encoding:(NSStringEncoding)encoding;
 - (id)initFromHTMLFile:(NSString *)filename;
@@ -68,7 +64,7 @@
 + (id)elementFromXMLFilePath:(NSString *)fullPath;
 + (id)elementFromURL:(NSURL *)url __attribute__((deprecated));
 + (id)elementFromXMLData:(NSData *)data;
-+ (id)elementFromXMLDoc:(RXMLDocHolder *)doc node:(xmlNodePtr)node;
++ (id)elementFromXMLDoc:(RXMLDocHolder *)doc node:(struct xmlNode *)node;
 
 + (id)elementFromHTMLString:(NSString *)xmlString encoding:(NSStringEncoding)encoding;
 + (id)elementFromHTMLFile:(NSString *)filename;
